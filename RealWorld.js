@@ -39,36 +39,26 @@ const bookings = [
 
 // OUTPUT:
 let objt={}
+
+//Creo el Objeto de todo el numero de habitaciones las habitaciones
 const hab= bookings.map(elem=>elem["room"]).sort().filter(elm=> 
   objt.hasOwnProperty(elm)?false:objt[elm]=[""])
 
-console.log(objt)
+  //Hago un iterador para recorrer cada cliente e insertarlo para poder clasificarlo por habitacion
+
 for(hb in objt){
   let reg=bookings.filter(elm=>elm["room"]===hb).reduce(
-    (a, b, index)=>{
+    (a, b)=>{
       let ini=0
-      
       a.length===b["from"]+1?(a[a.length-1]+=" ⬇️"+b["owner"], ini=b["from"]+1 ):ini=0
-      
       let arr=[]
-      
       for(let i=ini;i<=b["to"];i++){
-        
         i===b["from"]?arr.push("⬇️"+b["owner"]):i>b["from"]&&i<b["to"]?arr.push(b["owner"]):i===b["to"]?arr.push("⬆️"+b["owner"]):arr.push("")
-        
       }
       return a.concat(arr)
     },[]
   )
   objt[hb]=[...reg]
 }
-
-
-console.log(objt)
 // console.table(resp);
 console.table(objt)
-console.table({
-  "Habitación 1": ["", "⬇️Aang", "Aang", "⬆️Aang ⬇️Iroh", "Iroh", "⬆️Iroh"],
-  "Habitación 2": ["", "⬇️Toph", "Toph", "Toph", "Toph", "⬆️Toph"],
-  "Habitación 3": ["", "", "⬇️Sokka", "Sokka", "⬆️Sokka", ""],
-});
